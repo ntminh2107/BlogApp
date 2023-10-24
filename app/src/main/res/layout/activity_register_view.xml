@@ -4,6 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login"
     tools:context=".view.RegisterView">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="90dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REGISTER"
+            android:fontFamily="monospace"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            />
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/emailcreateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
+
+
+            <EditText
+                android:id="@+id/usernamecreateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
+
+            <EditText
+                android:id="@+id/fullnamecreateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="fullname"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
+
+            <EditText
+                android:id="@+id/passwordcreateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:inputType="textPassword"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
+
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textAlignment="center"
+            android:fontFamily="monospace"
+            android:layout_margin="30dp"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
