@@ -1,8 +1,10 @@
-package com.mad.g1.nguyentuanminh.blogapp;
+package com.mad.g1.nguyentuanminh.blogapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.mad.g1.nguyentuanminh.blogapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
