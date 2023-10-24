@@ -29,11 +29,12 @@
             android:textAlignment="center"
             />
         <LinearLayout
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/emailcreateEditText"
                 android:layout_width="match_parent"
