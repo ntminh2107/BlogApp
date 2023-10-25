@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.mad.g1.nguyentuanminh.blogapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.mad.g1.nguyentuanminh.blogapp"

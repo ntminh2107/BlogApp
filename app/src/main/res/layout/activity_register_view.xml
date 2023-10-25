@@ -95,6 +95,27 @@
                 android:inputType="textPassword"
                 android:layout_margin="20dp"
                 android:background="@drawable/textinputborder"/>
+            <EditText
+                android:id="@+id/dobET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="dd/mm/yy"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:inputType="date"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
+            <EditText
+                android:id="@+id/pobET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="place of birth"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:fontFamily="monospace"
+                android:layout_margin="20dp"
+                android:background="@drawable/textinputborder"/>
 
         </LinearLayout>
 
