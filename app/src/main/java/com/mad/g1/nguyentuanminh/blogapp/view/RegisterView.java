@@ -131,6 +131,8 @@ public class RegisterView extends AppCompatActivity {
                     firebaseUser.sendEmailVerification();
 
                     Intent intent = new Intent(RegisterView.this, LoginView.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
