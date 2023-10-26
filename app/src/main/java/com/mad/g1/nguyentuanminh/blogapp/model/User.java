@@ -3,17 +3,17 @@ package com.mad.g1.nguyentuanminh.blogapp.model;
 import java.util.Date;
 
 public class User {
-    int id;
+//    int count = 0;
+//    int id;
     String email;
     String password;
     String role;
     String fullname;
-    Date dob;
+    String dob;
     String pob;
     String gender;
 
-    public User(int id, String email, String password, String role, String fullname, Date dob, String pob, String gender) {
-        this.id = id;
+    public User(String email, String password, String role, String fullname, String dob, String pob, String gender) {
         this.email = email;
         this.password = password;
         this.role = role;
@@ -23,13 +23,13 @@ public class User {
         this.gender = gender;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getEmail() {
         return email;
@@ -63,11 +63,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -86,4 +86,7 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+//    public User() {
+//    }
 }
