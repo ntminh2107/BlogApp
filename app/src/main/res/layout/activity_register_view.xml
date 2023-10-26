@@ -64,6 +64,7 @@
                     android:fontFamily="monospace"
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:checked="true"
                     />
                 <RadioButton
                     android:id="@+id/femaleRadio"
