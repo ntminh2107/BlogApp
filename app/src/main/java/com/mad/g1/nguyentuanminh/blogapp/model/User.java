@@ -13,10 +13,7 @@ public class User {
     String pob;
     String gender;
 
-    public User(String email, String password, String role, String fullname, String dob, String pob, String gender) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    public User( String fullname, String dob, String pob, String gender) {
         this.fullname = fullname;
         this.dob = dob;
         this.pob = pob;
