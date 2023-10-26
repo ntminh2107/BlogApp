@@ -21,8 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ktx.Firebase;
 import com.mad.g1.nguyentuanminh.blogapp.R;
+import com.mad.g1.nguyentuanminh.blogapp.model.User;
 
 import java.util.regex.Pattern;
 
@@ -127,12 +130,30 @@ public class RegisterView extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
-                    //send email verification
-                    firebaseUser.sendEmailVerification();
 
-                    Intent intent = new Intent(RegisterView.this, LoginView.class);
-                    startActivity(intent);
-                    finish();
+                    //enter user data already registered into firebase realtime database
+                    User user = new User(textEmail,textPass,"user",textFullname,textDob,textPob,textGender);
+                    DatabaseReference referenceprofile = FirebaseDatabase.getInstance().getReference("Registered user");
+                    referenceprofile.child(firebaseUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if(task.isSuccessful())
+                            {
+                                //send email verification
+                                firebaseUser.sendEmailVerification();
+                                Toast.makeText(RegisterView.this, "registered successfully, pls verify your email", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegisterView.this, LoginView.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(RegisterView.this, "registered failed", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                        }
+                    });
+
                 }
             }
         });
