@@ -153,23 +153,6 @@ public class RegisterView extends AppCompatActivity {
                                 }
                             });
 
-                            //send email verification
-//                    User user = new User("user",textFullname,textDob,textPob,textGender);
-//                    DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("registered users");
-////                    referenceProfile.child(firebaseUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//                                //send email verification
-//                                firebaseUser.sendEmailVerification();
-//                                Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(RegisterView.this, LoginView.class);
-//                                startActivity(intent);
-//                            } else{
-//                                Toast.makeText(RegisterView.this, "register failed", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
                         }
                     }
                 });

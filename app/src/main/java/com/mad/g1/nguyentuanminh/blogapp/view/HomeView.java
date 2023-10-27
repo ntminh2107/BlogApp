@@ -2,6 +2,8 @@ package com.mad.g1.nguyentuanminh.blogapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
@@ -32,6 +34,14 @@ public class HomeView extends AppCompatActivity {
                 selectedFragment = new SearchFragment();
             } else if (item.getItemId() == R.id.navigation_profile) {
                 selectedFragment = new ProfileFragment();
+            }
+
+            if(selectedFragment!= null)
+            {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container,selectedFragment);
+                transaction.commit();
             }
             return true;
         });
