@@ -26,23 +26,15 @@ public class HomeView extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment = null;
-            if(item.getItemId() == R.id.navigation_home)
-            {
-                selectedFragment = new HomeFragment();
-            } else if(item.getItemId() == R.id.navigation_search)
-            {
-                selectedFragment = new SearchFragment();
-            } else if (item.getItemId() == R.id.navigation_profile) {
-                selectedFragment = new ProfileFragment();
-            }
+
 
             if(selectedFragment!= null)
             {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragment_container,selectedFragment);
-                transaction.commit();
+                transaction.replace(R.id.fragment_container,selectedFragment).commit();
             }
+
             return true;
         });
 

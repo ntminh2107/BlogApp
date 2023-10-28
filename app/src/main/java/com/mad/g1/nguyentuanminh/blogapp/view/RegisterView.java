@@ -141,15 +141,14 @@ public class RegisterView extends AppCompatActivity {
                             reference.child(firebaseUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful())
-                                    {
+                                    if (task.isSuccessful()) {
                                         firebaseUser.sendEmailVerification();
                                         Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(RegisterView.this, LoginView.class);
                                         startActivity(intent);
-                            } else{Toast.makeText(RegisterView.this, "register failed", Toast.LENGTH_SHORT).show();
-                           }
-
+                                    } else {
+                                        Toast.makeText(RegisterView.this, "register failed", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
 

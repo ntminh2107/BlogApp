@@ -1,5 +1,6 @@
 package com.mad.g1.nguyentuanminh.blogapp.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.mad.g1.nguyentuanminh.blogapp.R;
+import com.mad.g1.nguyentuanminh.blogapp.view.LoginView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +29,7 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button editProfileBTN,logoutBTN,changePassBTN;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,6 +66,19 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
+//        logoutBTN = view.findViewById(R.id.LogoutBtn);
+//
+//
+//
+//
+//        logoutBTN.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), LoginView.class);
+//                Toast.makeText(getContext(), "Logout success", Toast.LENGTH_SHORT).show();
+//                startActivity(intent);
+//            }
+//        });
         // Inflate the layout for this fragment
         return view;
     }

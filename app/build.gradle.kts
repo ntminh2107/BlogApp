@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ViewBinding
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -30,6 +32,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {

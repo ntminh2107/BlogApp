@@ -42,10 +42,6 @@ public class LoginView extends AppCompatActivity {
         loginBTN = findViewById(R.id.loginBtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-
-
-
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,8 +86,9 @@ public class LoginView extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(LoginView.this, "login success", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginView.this,HomeView.class);
+                    Intent intent = new Intent(LoginView.this, ProfileActivityTest.class);
                     startActivity(intent);
+                    finish();
                 } else{
                     try{
                         throw task.getException();
