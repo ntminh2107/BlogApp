@@ -1,4 +1,4 @@
-package com.mad.g1.nguyentuanminh.blogapp.view;
+package com.mad.g1.nguyentuanminh.blogapp.test;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.g1.nguyentuanminh.blogapp.R;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
+import com.mad.g1.nguyentuanminh.blogapp.view.LoginView;
 
 public class ProfileActivityTest extends AppCompatActivity {
 

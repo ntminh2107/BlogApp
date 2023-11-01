@@ -22,8 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.database.core.Tag;
 import com.mad.g1.nguyentuanminh.blogapp.R;
+import com.mad.g1.nguyentuanminh.blogapp.test.ProfileActivityTest;
 
 public class LoginView extends AppCompatActivity {
     private TextView registerTV;

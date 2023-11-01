@@ -24,20 +24,4 @@ public class HomeView extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-
-
-            if(selectedFragment!= null)
-            {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragment_container,selectedFragment).commit();
-            }
-
-            return true;
-        });
-
-        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-    }
-}
+}}
