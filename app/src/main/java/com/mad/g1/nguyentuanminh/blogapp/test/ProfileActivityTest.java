@@ -3,7 +3,9 @@ package com.mad.g1.nguyentuanminh.blogapp.test;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,19 +21,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mad.g1.nguyentuanminh.blogapp.R;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
+import com.mad.g1.nguyentuanminh.blogapp.view.EditProfileView;
 import com.mad.g1.nguyentuanminh.blogapp.view.LoginView;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivityTest extends AppCompatActivity {
 
 
-    private TextView TestfullnameText,TestbirthdateText,TestbirthplaceText,TestgenderText;
+    private TextView TestfullnameText,TestUsernameText,TestDesText,TestgenderText;
     private Button testEditBtn, testchangepassBtn, testlogoutBtn;
     private FirebaseUser firebaseUser;
     private FirebaseAuth auth;
     private ImageView testAvaView;
-    String fullname, birthdate,birthplace, gender,email;
+    private StorageReference reference;
+    String fullname, username,des, gender,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +55,16 @@ public class ProfileActivityTest extends AppCompatActivity {
         }
 
         TestfullnameText = findViewById(R.id.fullnameTextViewTest);
-        TestbirthdateText = findViewById(R.id.birthDateTextViewTest);
-        TestbirthplaceText = findViewById(R.id.birtPlaceTextViewTest);
-        TestgenderText = findViewById(R.id.genderTextViewTest);
+        TestUsernameText = findViewById(R.id.UsernameTextViewTest);
+        TestDesText = findViewById(R.id.DesTextViewTest);
         testEditBtn =findViewById(R.id.editProfileBtnTest);
         testchangepassBtn = findViewById(R.id.changePassBtnTest);
         testlogoutBtn =findViewById(R.id.LogoutBtnTest);
+
+
+        testAvaView = findViewById(R.id.avatarImageViewTest);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("user/" + firebaseUser.getUid().toString());
+
 
         String useruid = firebaseUser.getUid();
 
@@ -62,9 +74,10 @@ public class ProfileActivityTest extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 TestfullnameText.setText(user.getFullname());
-                TestbirthdateText.setText(user.getDob());
-                TestbirthplaceText.setText(user.getPob());
-                TestgenderText.setText(user.getGender());
+                TestUsernameText.setText(user.getUsername());
+                TestDesText.setText("Des: " +user.getDes());
+                Glide.with(ProfileActivityTest.this).load(user.getImage()).into(testAvaView);
+
             }
 
             @Override
@@ -72,10 +85,19 @@ public class ProfileActivityTest extends AppCompatActivity {
 
             }
         });
+        
+        testEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivityTest.this, EditProfileView.class);
+                 startActivity(intent);
+            }
+        });
 
         testlogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
                 Intent intent = new Intent(ProfileActivityTest.this, LoginView.class);
                 Toast.makeText(ProfileActivityTest.this, "logoutSuccess", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
@@ -94,14 +116,14 @@ public class ProfileActivityTest extends AppCompatActivity {
                 {
                     fullname = user.fullname;
                     email = firebaseUser.getEmail();
-                    birthdate = user.dob;
-                    birthplace = user.pob;
-                    gender = user.gender;
+                    username = user.username;
+                    des = user.des;
+
+
 
                     TestfullnameText.setText(fullname);
-                    TestbirthdateText.setText(birthdate);
-                    TestbirthplaceText.setText(birthplace);
-                    TestgenderText.setText(gender);
+                    TestUsernameText.setText(username);
+                    TestDesText.setText(des);
 
                 }else{
                     Toast.makeText(ProfileActivityTest.this, "something went wrong", Toast.LENGTH_SHORT).show();

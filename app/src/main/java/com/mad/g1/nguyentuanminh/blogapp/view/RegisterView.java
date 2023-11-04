@@ -137,7 +137,7 @@ public class RegisterView extends AppCompatActivity {
                             Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                             FirebaseUser firebaseUser = auth.getCurrentUser();
-                            User user = new User(textFullname, textDob, textPob, textGender);
+                            User user = new User(textFullname, textDob, textPob, textGender,"no username", "no des","no image");
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
                             reference.child(firebaseUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

@@ -11,21 +11,7 @@ public class User {
     public String gender;
     public String username;
     public String des;
-
-    public User( String fullname, String dob, String pob, String gender) {
-        this.fullname = fullname;
-        this.dob = dob;
-        this.pob = pob;
-        this.gender = gender;
-    }
-
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public String image;
 
 
     public String getFullname() {
@@ -60,16 +46,41 @@ public class User {
         this.gender = gender;
     }
 
-    public User() {
+    public String getUsername() {
+        return username;
     }
 
-    public User(String fullname, String dob, String pob, String gender, String username, String des) {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public User(String fullname, String dob, String pob, String gender, String username, String des, String image) {
         this.fullname = fullname;
         this.dob = dob;
         this.pob = pob;
         this.gender = gender;
         this.username = username;
         this.des = des;
+        this.image = image;
+    }
+
+    public User() {
     }
 }
 
