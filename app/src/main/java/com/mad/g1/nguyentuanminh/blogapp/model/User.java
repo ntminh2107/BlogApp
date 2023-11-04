@@ -9,6 +9,8 @@ public class User {
     public String dob;
     public String pob;
     public String gender;
+    public String username;
+    public String des;
 
     public User( String fullname, String dob, String pob, String gender) {
         this.fullname = fullname;
@@ -59,6 +61,15 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(String fullname, String dob, String pob, String gender, String username, String des) {
+        this.fullname = fullname;
+        this.dob = dob;
+        this.pob = pob;
+        this.gender = gender;
+        this.username = username;
+        this.des = des;
     }
 }
 
