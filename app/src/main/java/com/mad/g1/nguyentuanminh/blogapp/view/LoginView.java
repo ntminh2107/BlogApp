@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.mad.g1.nguyentuanminh.blogapp.R;
+import com.mad.g1.nguyentuanminh.blogapp.modelview.LoginViewModel;
 import com.mad.g1.nguyentuanminh.blogapp.test.ProfileActivityTest;
 
 public class LoginView extends AppCompatActivity {
@@ -30,11 +32,14 @@ public class LoginView extends AppCompatActivity {
     private EditText emailLoginET,passLoginET;
     private Button loginBTN;
     private FirebaseAuth firebaseAuth;
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         registerTV = findViewById(R.id.registerText);
         emailLoginET = findViewById(R.id.inpEmail);
@@ -62,7 +67,18 @@ public class LoginView extends AppCompatActivity {
                     emailLoginET.setError("password is required");
                     emailLoginET.requestFocus();
                 } else {
-                    loginUser(textEmail,textPassword);
+                    loginViewModel.loginUser(textEmail,textPassword);
+                    loginViewModel.getLoginResult().observe(LoginView.this,loginSuccess ->{
+                        if(loginSuccess != null && loginSuccess){
+                            Toast.makeText(LoginView.this, "Login Success", Toast.LENGTH_SHORT).show();
+                            Intent intent =new Intent(LoginView.this, HomeView.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            String error = loginViewModel.getErrorMSG().getValue();
+                            Toast.makeText(LoginView.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
             }
@@ -78,38 +94,5 @@ public class LoginView extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void loginUser(String textEmail, String textPassword) {
-        firebaseAuth.signInWithEmailAndPassword(textEmail,textPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(LoginView.this, "login success", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginView.this, ProfileActivityTest.class);
-                    startActivity(intent);
-                    finish();
-                } else{
-                    try{
-                        throw task.getException();
-                    }catch (FirebaseAuthInvalidUserException e)
-                    {
-                        emailLoginET.setError("User does not exists!!!!");
-                        emailLoginET.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e)
-                    {
-                        emailLoginET.setError("invalid credential");
-                        emailLoginET.requestFocus();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(LoginView.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                    Toast.makeText(LoginView.this, "somethings went wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }

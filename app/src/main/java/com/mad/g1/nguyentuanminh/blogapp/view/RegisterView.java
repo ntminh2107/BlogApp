@@ -2,6 +2,7 @@ package com.mad.g1.nguyentuanminh.blogapp.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
 import com.mad.g1.nguyentuanminh.blogapp.R;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
+import com.mad.g1.nguyentuanminh.blogapp.modelview.RegisterViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,11 +43,14 @@ public class RegisterView extends AppCompatActivity {
     private RadioGroup groupGender;
     private Button RegisterBTN;
     private ProgressBar progressBar;
+    RegisterViewModel registerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_view);
+
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         emailReg = findViewById(R.id.emailET);
         fullnameReg = findViewById(R.id.fullnameET);
@@ -115,46 +120,25 @@ public class RegisterView extends AppCompatActivity {
                 } else {
                     textGender = genderSelected.getText().toString();
                     progressBar.setVisibility(View.VISIBLE);
-                    registerUser(textEmail,textFullname,textPass,textDob,textGender,textPob);
+
+                    User user = new User(textFullname, textDob, textPob, textGender, "no username", "no des", "no image");
+                    registerViewModel.registerUser(user,textEmail,textPass);
+                    registerViewModel.getRegisResult().observe(RegisterView.this, RegisSuccess ->{
+                        if(RegisSuccess && RegisSuccess != null)
+                        {
+                            Toast.makeText(RegisterView.this, "Register Success", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterView.this,LoginView.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterView.this, "Register Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
 
             }
         });
-
-
-
-
     }
-    //Register using the credential given
-    private void registerUser(String textEmail, String textFullname, String textPass, String textDob, String textGender, String textPob) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(textEmail, textPass).addOnCompleteListener(RegisterView.this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                            FirebaseUser firebaseUser = auth.getCurrentUser();
-                            User user = new User(textFullname, textDob, textPob, textGender,"no username", "no des","no image");
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
-                            reference.child(firebaseUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        firebaseUser.sendEmailVerification();
-                                        Toast.makeText(RegisterView.this, "user registered successfull", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(RegisterView.this, LoginView.class);
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(RegisterView.this, "register failed", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
 
-                        }
-                    }
-                });
-    }
 }
