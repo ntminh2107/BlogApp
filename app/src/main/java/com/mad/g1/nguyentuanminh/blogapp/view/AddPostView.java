@@ -1,4 +1,4 @@
-package com.mad.g1.nguyentuanminh.blogapp.test;
+package com.mad.g1.nguyentuanminh.blogapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.mad.g1.nguyentuanminh.blogapp.R;
 
-public class BlogPostTest extends AppCompatActivity {
+public class AddPostView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blog_post_test);
+        setContentView(R.layout.activity_add_post_view);
     }
 }
