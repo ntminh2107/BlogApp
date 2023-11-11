@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.mad.g1.nguyentuanminh.blogapp.R;
+import com.mad.g1.nguyentuanminh.blogapp.adapter.PostAdapter;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
 import com.mad.g1.nguyentuanminh.blogapp.modelview.ProfileViewModel;
 import com.mad.g1.nguyentuanminh.blogapp.view.EditProfileView;
@@ -28,6 +29,7 @@ public class ProfileFragment extends Fragment {
     private TextView fullnameText, usernameText, desText;
     private Button editBtn, logoutBtn;
     private ImageView avaView;
+    private PostAdapter postAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -3,8 +3,7 @@ package com.mad.g1.nguyentuanminh.blogapp.model;
 import java.util.Date;
 
 public class User {
-//    int count = 0;
-//    int id;
+
     public String fullname;
     public String dob;
     public String pob;
