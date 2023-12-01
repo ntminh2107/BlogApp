@@ -101,5 +101,6 @@ public class AddPostViewModel extends ViewModel {
                 .addOnSuccessListener(task -> addPostResult.setValue(true))
                 .addOnFailureListener(e -> addPostResult.setValue(false));
     }
+    //xin chao
 
 }
