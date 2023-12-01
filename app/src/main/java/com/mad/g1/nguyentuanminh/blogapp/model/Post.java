@@ -37,6 +37,17 @@ public class Post {
         // Set timestamp to ServerValue.TIMESTAMP when creating a new post
         this.timestamp = ServerValue.TIMESTAMP;
     }
+    public Post(String username, String userid, String title, String content,String userProfileImg) {
+        this.username = username;
+        this.userid = userid;
+        this.title = title;
+        this.content = content;
+        this.userProfileImg = userProfileImg;
+        // Set timestamp to ServerValue.TIMESTAMP when creating a new post
+        this.timestamp = ServerValue.TIMESTAMP;
+    }
+
+
 
 
     public String getUsername() {

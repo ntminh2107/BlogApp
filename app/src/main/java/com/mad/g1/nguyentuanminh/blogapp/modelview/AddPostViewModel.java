@@ -3,7 +3,6 @@ package com.mad.g1.nguyentuanminh.blogapp.modelview;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -27,10 +26,9 @@ public class AddPostViewModel extends ViewModel {
     private DatabaseReference userRef;
     private DatabaseReference postRef;
     private MutableLiveData<Boolean> addPostResult = new MutableLiveData<>();
-    private MutableLiveData<String> userImageUrl = new MutableLiveData<>();
 
-    public LiveData<String> getUserImageUrl() {
-        return userImageUrl;
+    public MutableLiveData<Boolean> getAddPostResult() {
+        return addPostResult;
     }
 
     public AddPostViewModel() {
@@ -48,24 +46,38 @@ public class AddPostViewModel extends ViewModel {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String username = snapshot.child("username").getValue(String.class);
-                        String userProfileImg = snapshot.child("image").getValue(String.class); // Retrieve user profile image URL
+                        String userProfileImg = snapshot.child("image").getValue(String.class);
+
                         if (username != null) {
-                            Post post = new Post(username, user.getUid(), title, content,null ,userProfileImg); // Include user profile image URL
-                            // Set timestamp to ServerValue.TIMESTAMP when creating a new post
+                            Post post = new Post(username, user.getUid(), title, content, userProfileImg);
                             post.setTimestamp(ServerValue.TIMESTAMP);
 
                             if (imguri != null) {
+                                // Upload the image to Firebase Storage
                                 StorageReference imgRef = storage.child("images/" + user.getUid() + "/"
                                         + System.currentTimeMillis() + ".jpg");
-                                imgRef.putFile(imguri).addOnSuccessListener(taskSnapshot -> {
-                                    imgRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        post.setImg(uri.toString());
-                                        addPostToDB(post);
-                                    });
-                                }).addOnFailureListener(e -> {
-                                    addPostToDB(post);
-                                });
+                                imgRef.putFile(imguri)
+                                        .addOnSuccessListener(taskSnapshot -> {
+                                            // Get the download URL for the image
+                                            imgRef.getDownloadUrl()
+                                                    .addOnSuccessListener(uri -> {
+                                                        // Set the image URL in the Post object
+                                                        post.setImg(uri.toString());
+
+                                                        // Add the post to the database
+                                                        addPostToDB(post);
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        // Handle failure to get image URL
+                                                        addPostResult.setValue(false);
+                                                    });
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Handle failure to upload image
+                                            addPostResult.setValue(false);
+                                        });
                             } else {
+                                // If no image is selected, add the post to the database without an image
                                 addPostToDB(post);
                             }
                         }
@@ -75,6 +87,7 @@ public class AddPostViewModel extends ViewModel {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     // Handle errors
+                    addPostResult.setValue(false);
                 }
             });
         }
@@ -83,13 +96,10 @@ public class AddPostViewModel extends ViewModel {
     private void addPostToDB(Post post) {
         String postID = postRef.push().getKey();
         post.setPostID(postID);
-        postRef.child(postID).setValue(post).addOnSuccessListener(task -> {
-            addPostResult.setValue(true);
-        }).addOnFailureListener(e -> {
-            addPostResult.setValue(false);
-        });
+
+        postRef.child(postID).setValue(post)
+                .addOnSuccessListener(task -> addPostResult.setValue(true))
+                .addOnFailureListener(e -> addPostResult.setValue(false));
     }
-
-
 
 }
