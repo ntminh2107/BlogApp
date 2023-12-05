@@ -2,8 +2,11 @@ package com.mad.g1.nguyentuanminh.blogapp.model;
 
 import com.google.firebase.database.ServerValue;
 
+import org.w3c.dom.Comment;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Post {
@@ -15,6 +18,9 @@ public class Post {
     String img;
     private Object timestamp;
     String userProfileImg;
+    int likecount;
+    boolean isliked;
+    private List<Comments> comments;
 
     // other fields, constructor, and methods
 
@@ -27,7 +33,7 @@ public class Post {
         return timestamp;
     }
 
-    public Post(String username, String userid, String title, String content, String img,String userProfileImg) {
+    public Post(String username, String userid, String title, String content ,String img,String userProfileImg) {
         this.username = username;
         this.userid = userid;
         this.title = title;
@@ -47,8 +53,16 @@ public class Post {
         this.timestamp = ServerValue.TIMESTAMP;
     }
 
-
-
+    public Post(String postID, String username, String userid, String title, String content, String userProfileImg, List<Comments> comments) {
+        this.postID = postID;
+        this.username = username;
+        this.userid = userid;
+        this.title = title;
+        this.content = content;
+        this.timestamp = ServerValue.TIMESTAMP;
+        this.userProfileImg = userProfileImg;
+        this.comments = comments;
+    }
 
     public String getUsername() {
         return username;
@@ -117,5 +131,21 @@ public class Post {
 
     public void setUserProfileImg(String userProfileImg) {
         this.userProfileImg = userProfileImg;
+    }
+
+    public int getLikecount() {
+        return likecount;
+    }
+
+    public void setLikecount(int likecount) {
+        this.likecount = likecount;
+    }
+
+    public boolean isIsliked() {
+        return isliked;
+    }
+
+    public void setIsliked(boolean isliked) {
+        this.isliked = isliked;
     }
 }

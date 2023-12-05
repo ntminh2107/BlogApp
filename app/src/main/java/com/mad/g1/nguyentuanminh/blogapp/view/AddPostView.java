@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class AddPostView extends AppCompatActivity {
         imgView = findViewById(R.id.imgView);
         addImgBtn = findViewById(R.id.addImgBTN);
         postBtn = findViewById(R.id.addBTN);
+        imgView.setVisibility(View.GONE);
 
         addPostViewModel = new ViewModelProvider(this).get(AddPostViewModel.class);
 
@@ -65,6 +67,7 @@ public class AddPostView extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             try {
+                imgView.setVisibility(View.VISIBLE);
                 InputStream imageStream = getContentResolver().openInputStream(selectedImageUri);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
@@ -109,7 +112,9 @@ public class AddPostView extends AppCompatActivity {
         if (selectedImageUri != null && resizedBitmap != null) {
             addPostViewModel.addPost(title, content, selectedImageUri);
         } else {
+            imgView.setVisibility(View.GONE);
             addPostViewModel.addPost(title, content, null);
+
         }
 
         Toast.makeText(this, "Upload Success", Toast.LENGTH_SHORT).show();

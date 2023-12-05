@@ -1,29 +1,40 @@
 package com.mad.g1.nguyentuanminh.blogapp.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.mad.g1.nguyentuanminh.blogapp.Fragment.HomeFragment;
 import com.mad.g1.nguyentuanminh.blogapp.R;
 import com.mad.g1.nguyentuanminh.blogapp.model.Post;
+import com.mad.g1.nguyentuanminh.blogapp.model.User;
+import com.mad.g1.nguyentuanminh.blogapp.modelview.PostViewModel;
+import com.mad.g1.nguyentuanminh.blogapp.view.DetailPostView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
-    private List<Post> postList;
+    public List<Post> postList;
 
     public PostAdapter(List<Post> postList) {
         this.postList = postList;
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView usernameView, timestampView, titleView, contentView;
+        TextView usernameView, timestampView, titleView, contentView,likeView;
         ImageView imageView, userIMGview;
+        ImageButton likeBTN, cmtBTN;
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -33,6 +44,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             contentView = itemView.findViewById(R.id.ContentView);
             imageView = itemView.findViewById(R.id.imagePost);
             userIMGview = itemView.findViewById(R.id.userPics);
+            likeBTN = itemView.findViewById(R.id.likeButton);
+            likeView = itemView.findViewById(R.id.likecountTV);
+            cmtBTN = itemView.findViewById(R.id.cmtBTN);
+
         }
     }
 
@@ -51,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.timestampView.setText(post.getTimestamp().toString());
         holder.titleView.setText(post.getTitle());
         holder.contentView.setText(post.getContent());
+        holder.likeView.setText(String.valueOf(post.getLikecount()+1));
 
         // Load user profile image
         if (post.getUserProfileImg() != null && !post.getUserProfileImg().isEmpty()) {
@@ -66,6 +82,36 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             holder.imageView.setVisibility(View.GONE);
         }
+
+
+        holder.likeBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                if(position!= RecyclerView.NO_POSITION)
+                {
+                    Post post = postList.get(position);
+                        post.setLikecount(post.getLikecount()+1);
+                        holder.likeBTN.setImageResource(R.drawable.thumbupblue);
+
+                    notifyItemChanged(position);
+                    DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("post").child(post.getPostID());
+                    postRef.child("likecount").setValue(post.getLikecount());
+                }
+            }
+        });
+
+        holder.cmtBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Post post1 = postList.get(position);
+
+                Intent intent = new Intent(v.getContext(), DetailPostView.class);
+                intent.putExtra("postId", post1.getPostID());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

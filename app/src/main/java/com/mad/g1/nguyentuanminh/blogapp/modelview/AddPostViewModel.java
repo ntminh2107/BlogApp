@@ -49,7 +49,7 @@ public class AddPostViewModel extends ViewModel {
                         String userProfileImg = snapshot.child("image").getValue(String.class);
 
                         if (username != null) {
-                            Post post = new Post(username, user.getUid(), title, content, userProfileImg);
+                            Post post = new Post(username, user.getUid(), title, content ,userProfileImg);
                             post.setTimestamp(ServerValue.TIMESTAMP);
 
                             if (imguri != null) {
@@ -96,6 +96,7 @@ public class AddPostViewModel extends ViewModel {
     private void addPostToDB(Post post) {
         String postID = postRef.push().getKey();
         post.setPostID(postID);
+        post.setLikecount(0);
 
         postRef.child(postID).setValue(post)
                 .addOnSuccessListener(task -> addPostResult.setValue(true))

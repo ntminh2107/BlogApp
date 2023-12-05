@@ -121,7 +121,7 @@ public class RegisterView extends AppCompatActivity {
                     textGender = genderSelected.getText().toString();
                     progressBar.setVisibility(View.VISIBLE);
 
-                    User user = new User(textFullname, textDob, textPob, textGender, "no username", "no des", "no image");
+                    User user = new User(textFullname, textDob, textPob, textGender, textEmail, "no des", "no image");
                     registerViewModel.registerUser(user,textEmail,textPass);
                     registerViewModel.getRegisResult().observe(RegisterView.this, RegisSuccess ->{
                         if(RegisSuccess && RegisSuccess != null)
