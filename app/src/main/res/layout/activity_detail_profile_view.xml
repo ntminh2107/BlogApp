@@ -27,7 +27,7 @@
         android:id="@+id/DesTextViewTest"
         android:layout_gravity="center"
         android:text="xin chao cac ban!"/>
-    <com.google.android.material.search.SearchBar
+    <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="searh post"/>

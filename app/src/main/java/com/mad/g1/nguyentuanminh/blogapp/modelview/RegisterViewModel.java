@@ -26,6 +26,7 @@ public class RegisterViewModel extends ViewModel {
         firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                u.setIdUser(firebaseUser.getUid());
                 saveUserToDB(u, firebaseUser.getUid());
             } else {
                 regisResult.setValue(false);

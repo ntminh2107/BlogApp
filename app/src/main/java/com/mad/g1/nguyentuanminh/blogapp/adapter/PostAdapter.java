@@ -20,6 +20,7 @@ import com.mad.g1.nguyentuanminh.blogapp.model.Post;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
 import com.mad.g1.nguyentuanminh.blogapp.modelview.PostViewModel;
 import com.mad.g1.nguyentuanminh.blogapp.view.DetailPostView;
+import com.mad.g1.nguyentuanminh.blogapp.view.EditPostView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView usernameView, timestampView, titleView, contentView,likeView;
-        ImageView imageView, userIMGview;
+        ImageView imageView, userIMGview, choiceButton;
         ImageButton likeBTN, cmtBTN;
 
         public PostViewHolder(View itemView) {
@@ -47,6 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeBTN = itemView.findViewById(R.id.likeButton);
             likeView = itemView.findViewById(R.id.likecountTV);
             cmtBTN = itemView.findViewById(R.id.cmtBTN);
+            choiceButton = itemView.findViewById(R.id.choicepost);
 
         }
     }
@@ -61,12 +63,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
-
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = currentUser.getUid();
         holder.usernameView.setText(post.getUsername());
         holder.timestampView.setText(post.getTimestamp().toString());
         holder.titleView.setText(post.getTitle());
         holder.contentView.setText(post.getContent());
         holder.likeView.setText(String.valueOf(post.getLikecount()+1));
+        if (post.getUserid().equals(currentUserId)) {
+            // Nếu là bài post của current user, hiển thị nút "edit"
+            holder.choiceButton.setVisibility(View.VISIBLE);
+
+            // Bắt sự kiện khi người dùng click vào nút "edit"
+            holder.choiceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Xử lý logic khi người dùng click vào nút "edit"
+                    // Ví dụ: mở màn hình chỉnh sửa bài post
+                    Intent intent = new Intent(view.getContext(), EditPostView.class);
+                    intent.putExtra("postId",post.getPostID());
+                    view.getContext().startActivity(intent);
+                }
+            });
+        } else {
+            // Nếu không phải là bài post của current user, ẩn nút "edit"
+            holder.choiceButton.setVisibility(View.GONE);
+        }
 
         // Load user profile image
         if (post.getUserProfileImg() != null && !post.getUserProfileImg().isEmpty()) {
@@ -106,9 +128,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Post post1 = postList.get(position);
-
                 Intent intent = new Intent(v.getContext(), DetailPostView.class);
                 intent.putExtra("postId", post1.getPostID());
+
                 v.getContext().startActivity(intent);
             }
         });

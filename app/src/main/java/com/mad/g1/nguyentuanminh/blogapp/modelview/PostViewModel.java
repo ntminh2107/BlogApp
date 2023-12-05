@@ -82,5 +82,32 @@ public class PostViewModel extends ViewModel {
             }
         });
     }
+    public LiveData<List<Post>> getPostsByUserId(String userId) {
+        MutableLiveData<List<Post>> userPosts = new MutableLiveData<>();
+        DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("post");
+
+        postsRef.orderByChild("userid").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Post> posts = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    if (post != null) {
+                        posts.add(post);
+                    }
+                }
+                userPosts.setValue(posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+
+        return userPosts;
+    }
+
+
 
 }

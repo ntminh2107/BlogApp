@@ -6,8 +6,9 @@
     android:orientation="vertical"
     tools:context=".Fragment.SearchFragment">
 
-    <com.google.android.material.search.SearchBar
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_user"
+        android:hint="search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

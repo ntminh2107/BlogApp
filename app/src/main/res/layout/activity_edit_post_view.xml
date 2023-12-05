@@ -32,12 +32,12 @@
 
 
             <Button
-                android:id="@+id/addBTN"
+                android:id="@+id/editBTN"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center|right"
                 android:gravity="center"
-                android:text= "ADD"
+                android:text= "Edit"
                 android:layout_weight="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
@@ -54,10 +54,10 @@
             android:background="@drawable/no_underline_et"/>
 
         <Button
-            android:id="@+id/addImgBTN"
+            android:id="@+id/changeImgBTN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add Image (optional)"/>
+            android:text="changeImage (optional)"/>
 
         <ImageView
             android:id="@+id/imgView"

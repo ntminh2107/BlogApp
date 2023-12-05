@@ -44,7 +44,7 @@ public class DetailPostView extends AppCompatActivity {
     private Post post;
     private Button cmtbtn;
     private TextView usernameView, timestampView, titleView, contentView, likecount;
-    private ImageView imagePost;
+    private ImageView imagePost, editBtn;
 
     private DatabaseReference postRef;
     private CommentViewModel commentViewModel;
@@ -67,6 +67,22 @@ public class DetailPostView extends AppCompatActivity {
         imagePost = findViewById(R.id.imagePost);
         likeButton = findViewById(R.id.likeButton);
         likecount = findViewById(R.id.likecountTV);
+        editBtn = findViewById(R.id.choicepost);
+        if(post.getUserid().equals(currentUserId))
+        {
+            editBtn.setVisibility(View.VISIBLE);
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailPostView.this, EditPostView.class);
+                    intent.putExtra("postId", post.getPostID());
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
+            editBtn.setVisibility(View.GONE);
+        }
 
         // Get post details from Intent
         Intent intent = getIntent();

@@ -3,6 +3,7 @@ package com.mad.g1.nguyentuanminh.blogapp.model;
 import java.util.Date;
 
 public class User {
+    public String idUser;
 
     public String fullname;
     public String dob;
@@ -77,6 +78,14 @@ public class User {
         this.username = username;
         this.des = des;
         this.image = image;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public User() {
