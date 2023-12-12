@@ -16,10 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mad.g1.nguyentuanminh.blogapp.R;
 import com.mad.g1.nguyentuanminh.blogapp.adapter.PostAdapter;
 import com.mad.g1.nguyentuanminh.blogapp.model.User;
 import com.mad.g1.nguyentuanminh.blogapp.modelview.ProfileViewModel;
+import com.mad.g1.nguyentuanminh.blogapp.view.DetailProfileView;
 import com.mad.g1.nguyentuanminh.blogapp.view.EditProfileView;
 import com.mad.g1.nguyentuanminh.blogapp.view.LoginView;
 
@@ -30,10 +33,16 @@ public class ProfileFragment extends Fragment {
     private Button editBtn, logoutBtn;
     private ImageView avaView;
     private PostAdapter postAdapter;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        String userid = firebaseUser.getUid();
+
 
         fullnameText = root.findViewById(R.id.fullnameTextViewTest);
         usernameText = root.findViewById(R.id.UsernameTextViewTest);
@@ -48,7 +57,14 @@ public class ProfileFragment extends Fragment {
         });
 
         logoutBtn.setOnClickListener(v -> viewModel.logout());
-
+        avaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailProfileView.class);
+                intent.putExtra("userId",userid);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 

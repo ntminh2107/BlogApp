@@ -68,21 +68,6 @@ public class DetailPostView extends AppCompatActivity {
         likeButton = findViewById(R.id.likeButton);
         likecount = findViewById(R.id.likecountTV);
         editBtn = findViewById(R.id.choicepost);
-        if(post.getUserid().equals(currentUserId))
-        {
-            editBtn.setVisibility(View.VISIBLE);
-            editBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(DetailPostView.this, EditPostView.class);
-                    intent.putExtra("postId", post.getPostID());
-                    startActivity(intent);
-                }
-            });
-        }
-        else {
-            editBtn.setVisibility(View.GONE);
-        }
 
         // Get post details from Intent
         Intent intent = getIntent();
@@ -170,7 +155,7 @@ public class DetailPostView extends AppCompatActivity {
                 String comment = cmted.getText().toString().trim();
                 if (!TextUtils.isEmpty(comment)) {
                     // Call the addComment method in CommentViewModel
-                    commentViewModel.addComment(postId, comment);
+                    commentViewModel.addComment(postId,comment);
 
                     // Optionally, clear the EditText after submitting the comment
                     cmted.setText("");

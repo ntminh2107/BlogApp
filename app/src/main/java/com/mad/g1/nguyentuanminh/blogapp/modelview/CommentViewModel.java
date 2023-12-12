@@ -76,7 +76,7 @@ public class CommentViewModel extends ViewModel {
     }
 
     public LiveData<List<Comments>> getCommentList(String postId) {
-        DatabaseReference commentsRef = postRef.child(postId).child("comment");
+        DatabaseReference commentsRef = FirebaseDatabase.getInstance().getReference().child("post").child(postId).child("comment");
         commentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

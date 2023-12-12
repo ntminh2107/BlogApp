@@ -76,7 +76,6 @@ public class EditProfileViewModel extends ViewModel {
 
 
     public void updateProfileImage(String userId, String imageUrl) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("user").child(userId);
         DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("post");
 
         // Create a map to update both the user's profile image and posts

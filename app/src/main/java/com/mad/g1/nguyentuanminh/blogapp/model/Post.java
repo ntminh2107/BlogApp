@@ -64,6 +64,7 @@ public class Post {
         this.comments = comments;
     }
 
+
     public String getUsername() {
         return username;
     }
@@ -147,5 +148,13 @@ public class Post {
 
     public void setIsliked(boolean isliked) {
         this.isliked = isliked;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }
